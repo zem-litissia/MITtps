@@ -1,24 +1,29 @@
+
 class Discount:
-    def __init__(self, customer, price):
-        self.customer = customer
+    def __init__(self, price):
         self.price = price
 
     def apply_discount(self):
-        if self.customer == 'VIP':
-            return self.price * 0.8  # 20% discount
         return self.price
 
 
+
+class VIPDiscount(Discount):
+    def apply_discount(self):
+        return self.price * 0.8  # 20% discount
+
+
+
+class FirstTimeCustomerDiscount(Discount):
+    def apply_discount(self):
+        return self.price * 0.9  # 10% discount
+
+# main after OCP
 if __name__ == '__main__':
     price = 1000
-    customer = "VIP"
-    mydiscount = Discount(customer, price)
-    newprice = mydiscount.apply_discount()
-    print(f"Old Price: {price} for {customer}, New price {newprice}")
 
-    price = 1000
-    customer = "regular"
-    # discount of 5%
-    mydiscount2 = Discount(customer, price)
-    newprice2 = mydiscount2.apply_discount()
-    print(f"Old Price: {price} for {customer}, New price {newprice2}")
+    vip = VIPDiscount(price)
+    print(f"VIP customer: Old price = {price}, New price = {vip.apply_discount()}")
+
+    first_time = FirstTimeCustomerDiscount(price)
+    print(f"First-time customer: Old price = {price}, New price = {first_time.apply_discount()}")
