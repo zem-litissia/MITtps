@@ -5,14 +5,18 @@ class Order:
     def calculate_total(self):
         return sum(item['price'] for item in self.items)
 
-    def print_order(self):
+class OrderPrinter:
+    def print_order(self, order):
         print("Order details:")
-        for item in self.items:
+        for item in order.items:
             print(f"{item['name']}: ${item['price']}")
 
-    def save_to_db(self):
+class OrderRepository:
+    def save_to_db(self, order):
         print("Saving order to database...")
 
+
+#ajouter main
 
 if __name__ == '__main__':
     products = [
@@ -22,8 +26,11 @@ if __name__ == '__main__':
         {"name": "Meat", "price": 1000},
     ]
 
-    my_order = Order(products)
-    total = my_order.calculate_total()
+    order = Order(products)
+    printer = OrderPrinter()
+    repo = OrderRepository()
+
+    total = order.calculate_total()
     print("Total order:", total, "$")
-    my_order.print_order()
-    my_order.save_to_db()
+    printer.print_order(order)
+    repo.save_to_db(order)
