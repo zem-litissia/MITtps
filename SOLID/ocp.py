@@ -1,4 +1,4 @@
-
+# Base class
 class Discount:
     def __init__(self, price):
         self.price = price
@@ -7,7 +7,7 @@ class Discount:
         return self.price
 
 
-
+# VIP discount
 class VIPDiscount(Discount):
     def apply_discount(self):
         return self.price * 0.8  # 20% discount
@@ -18,7 +18,7 @@ class FirstTimeCustomerDiscount(Discount):
     def apply_discount(self):
         return self.price * 0.9  # 10% discount
 
-# main after OCP
+# Example usage
 if __name__ == '__main__':
     price = 1000
 
