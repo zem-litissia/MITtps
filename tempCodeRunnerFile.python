@@ -1,0 +1,59 @@
+class Model:
+    """Data model class"""
+    def __init__(self):
+        self.directory = [
+            {"firstname": 'Ahmed', "familyname": 'Mahdi', 'tel': '0778787887'},
+            {"firstname": 'Mohamed', "familyname": 'Mahdi', 'tel': '0778787887'},
+            {"firstname": 'Mounir', "familyname": 'Katibi', 'tel': '0778787887'},
+            {"firstname": 'Noui', "familyname": 'Brahimi', 'tel': '0778787887'},
+        ]
+
+    def search(self, nom):
+        """Lookup for a tel by lastname"""
+        persons = []
+        for persn in self.directory:
+            if persn["familyname"] == nom:
+                persons.append(persn)
+        return persons
+
+    def get_all(self):
+        """Return all people in the directory"""
+        return self.directory
+
+
+class View:
+    def input(self):
+        """Retrieve the name to search for"""
+        print("Finding a phone")
+        print("Give a name (or press Enter to see all people):")
+        name = input()
+        return name
+
+    def output(self, persons):
+        """Display information from a list of persons"""
+        print(f"\n{len(persons)} people found:")
+        for pers in persons:
+            print(pers["familyname"], pers["firstname"], pers['tel'])
+
+
+class Controller:
+    """Controller class to manage user interaction"""
+    def __init__(self):
+        self.data_model = Model()
+        self.viewer = View()
+
+    def search_or_show_all(self):
+        """Search by name or show all people"""
+        name = self.viewer.input()
+        if name.strip() == "":
+            # Show all people if no name is entered
+            persons = self.data_model.get_all()
+        else:
+            # Search for specific last name
+            persons = self.data_model.search(name)
+        self.viewer.output(persons)
+
+
+if __name__ == '__main__':
+    controller = Controller()
+    controller.search_or_show_all()

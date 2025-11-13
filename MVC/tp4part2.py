@@ -16,7 +16,16 @@ class model:
             if persn["familyname"] == nom:
                  persons.append(persn)
             # return a list of dictionaries
-            return persons
+        return persons
+     def get_all(self):
+        """ Find a tel by name"""
+        # List of found people
+        persons = []
+        for persn in self.directory:
+        # display all people
+             persons.append(persn)
+        # a table with field names
+        return persons
 class view:
     def __init__(self,):
         pass
@@ -31,9 +40,7 @@ class view:
         print("List of found names")
         print(" %d found people "%len(persons))
         for pers in persons:
-             print(pers["familyname"], pers["firstname"], pers['tel'])
-
-    
+             print(pers["familyname"], pers["firstname"], pers['tel'])  
 def controller():
         # This program allows you to search the number
         # in a table by its name, and display
@@ -46,4 +53,4 @@ def controller():
             myviewer.output(persons)
           
 if __name__ == '__main__':
-                controller()
+        controller()
