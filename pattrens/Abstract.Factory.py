@@ -1,7 +1,8 @@
-import sys
-from abc import ABC, abstractmethod
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
+from abc import ABC, abstractmethod
+
 
 class Shape:
     def draw(self): pass
