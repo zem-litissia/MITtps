@@ -1,33 +1,30 @@
+import sqlite3
 import threading
 
-class Singleton(object):
+class Singleton:
     _instance = None
-    _lock = threading.Lock() 
+    _lock = threading.Lock()
 
-    def __new__(cls, filename):
+    def __new__(cls, db_name):
         with cls._lock:
             if cls._instance is None:
                 cls._instance = super().__new__(cls)
-                cls._instance._file = open(filename, "w")  
+                cls._instance._connection = sqlite3.connect(db_name)
             return cls._instance
 
-    def write(self, text):
-        """Write text to the file"""
-        self._file.write(text + "\n")
-        self._file.flush()  
+    def execute(self, query):
+        cursor = self._connection.cursor()
+        cursor.execute(query)
+        self._connection.commit()
+        return cursor
 
     def close(self):
-        """Close the file"""
-        self._file.close()
-        Singleton._instance = None 
+        self._connection.close()
 
 
+db1 = Singleton("mydb.db")
+db2 = Singleton("mydb.db")
 
-writer1 = Singleton("output.txt")
-writer1.write("Hello World!")
-
-writer2 = Singleton("output.txt")
-writer2.write("This is the same file instance!")
-
-print(writer1 is writer2) 
-writer1.close()
+assert db1 is db2
+db1.execute("CREATE TABLE IF NOT EXISTS test(id INTEGER)")
+db1.close()
