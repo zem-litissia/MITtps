@@ -47,8 +47,7 @@ class Square3D(Square):
 class ShapeFactory:
     @staticmethod
     def createShape(type):pass
-
-
+    
 class ShapeFactory2D(ShapeFactory):
     @staticmethod
     def createShape(type):
