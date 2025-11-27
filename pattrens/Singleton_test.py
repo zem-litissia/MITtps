@@ -1,33 +1,36 @@
-import sqlite3
 import threading
 
 class Singleton:
-    _instance = None
-    _lock = threading.Lock()
+    _max_access = 2
+    _semaphore = threading.Semaphore(_max_access)
 
-    def __new__(cls, db_name):
-        with cls._lock:
-            if cls._instance is None:
-                cls._instance = super().__new__(cls)
-                cls._instance._connection = sqlite3.connect(db_name)
-            return cls._instance
+    def __init__(self, filename):
+        self._file = open(filename, "a")
 
-    def execute(self, query):
-        cursor = self._connection.cursor()
-        cursor.execute(query)
-        self._connection.commit()
-        return cursor
+    def write(self, text):
+        with self._semaphore:
+            self._file.write(text + "\n")
 
     def close(self):
-        self._connection.close()
+        self._file.close()
 
 
-db1 = Singleton("mydb.db")
-db2 = Singleton("mydb.db")
 
-assert db1 is db2
-db1.execute("CREATE TABLE IF NOT EXISTS test(id INTEGER)")
-db1.close()
+fileA = Singleton("test.txt")
+fileB = Singleton("test.txt")
+
+def write_text(file, text):
+    file.write(text)
+
+t1 = threading.Thread(target=write_text, args=(fileA, "Line 1"))
+t2 = threading.Thread(target=write_text, args=(fileB, "Line 2"))
+
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+
+fileA.close()
 
 
 
