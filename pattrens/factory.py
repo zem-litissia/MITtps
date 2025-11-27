@@ -3,9 +3,9 @@
 
 import sys
 
-#class Shape:
- #   def draw(self): pass
-  #  def erase(self): pass
+class Shape:
+    def draw(self): pass
+    def erase(self): pass
 
 class Circle(Shape):
     def draw(self): 
@@ -19,28 +19,12 @@ class Square(Shape):
     def erase(self): 
         print("Square.erase")
 
-class Rectangle(Shape):
-    def draw(self): 
-        print("Rectangle.draw")
-    def erase(self): 
-        print("Rectangle.erase")
-
-class Triangle(Shape):
-    def draw(self): 
-        print("Triangle.draw")
-    def erase(self): 
-        print("Triangle.erase")
-
 if __name__ == "__main__":
-    for type in ("Circle", "Square", "Rectangle", "Triangle"):
+    for type in ("Circle", "Square", "Circle", "Square"):
         if type == "Circle":
             shape = Circle()
         elif type == "Square":
             shape = Square()
-        elif type == "Rectangle":
-            shape = Rectangle()
-        elif type == "Triangle":
-            shape = Triangle()
         else:
             print("Bad shape creation: " + type)
             sys.exit()
