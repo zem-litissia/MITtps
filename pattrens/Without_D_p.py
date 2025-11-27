@@ -27,7 +27,23 @@ class Triangle:
     def draw(self): print("Triangle.draw")
     def erase(self): print("Triangle.erase")
     
-class ShapeFactory:
+
+
+class ShapeFactory_SCT:
+    @staticmethod
+    def createShape(type):
+        if type == "Circle": 
+            return Circle()
+        elif type == "Square": 
+            return Square()
+        elif type == "Triangle": 
+            return Triangle()
+        else:
+            print("Bad shape creation: " + type)
+            sys.exit()
+
+
+class ShapeFactory_SCR:
     @staticmethod
     def createShape(type):
         if type == "Circle": 
@@ -36,14 +52,20 @@ class ShapeFactory:
             return Square()
         elif type == "Rectangle": 
             return Rectangle()
-        elif type == "Triangle": 
-            return Triangle()
         else:
             print("Bad shape creation: " + type)
             sys.exit()
 
+
 if __name__ == "__main__":
-    for type in ("Circle", "Square", "Rectangle", "Triangle"):
-        shape = ShapeFactory.createShape(type)
+    print("Testing SCT Factory:")
+    for type in ("Circle", "Square", "Triangle"):
+        shape = ShapeFactory_SCT.createShape(type)
+        shape.draw()
+        shape.erase()
+    
+    print("\nTesting SCR Factory:")
+    for type in ("Circle", "Square", "Rectangle"):
+        shape = ShapeFactory_SCR.createShape(type)
         shape.draw()
         shape.erase()
