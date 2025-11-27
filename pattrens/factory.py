@@ -19,31 +19,22 @@ class Square(Shape):
     def erase(self): 
         print("Square.erase")
 
-class Rectangle(Shape):
-    def draw(self): 
-        print("Rectangle.draw")
-    def erase(self): 
-        print("Rectangle.erase")
 
-class Triangle(Shape):
-    def draw(self): 
-        print("Triangle.draw")
-    def erase(self): 
-        print("Triangle.erase")
 
-if __name__ == "__main__":
-    for type in ("Circle", "Square", "Rectangle", "Triangle"):
-        if type == "Circle":
-            shape = Circle()
-        elif type == "Square":
-            shape = Square()
-        elif type == "Rectangle":
-            shape = Rectangle()
-        elif type == "Triangle":
-            shape = Triangle()
+class ShapeFactory:
+    @staticmethod
+    def createShape(type):
+        if type == "Circle": 
+            return Circle()
+        elif type == "Square": 
+            return Square()
+
         else:
             print("Bad shape creation: " + type)
             sys.exit()
 
+if __name__ == "__main__":
+    for type in ("Circle", "Square", "Circle", "Square"):
+        shape = ShapeFactory.createShape(type)
         shape.draw()
         shape.erase()
