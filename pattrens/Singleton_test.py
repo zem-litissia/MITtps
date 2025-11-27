@@ -28,3 +28,8 @@ db2 = Singleton("mydb.db")
 assert db1 is db2
 db1.execute("CREATE TABLE IF NOT EXISTS test(id INTEGER)")
 db1.close()
+
+
+
+
+
