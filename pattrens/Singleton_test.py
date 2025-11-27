@@ -1,17 +1,33 @@
+import threading
+
 class Singleton(object):
-    instance = None  # static attribute of the class
+    _instance = None
+    _lock = threading.Lock() 
 
-    def __new__(cls):
-        """Standard Python construction method"""
-        if cls.instance is None:
-            cls.instance = object.__new__(cls)
-        return cls.instance
+    def __new__(cls, filename):
+        with cls._lock:
+            if cls._instance is None:
+                cls._instance = super().__new__(cls)
+                cls._instance._file = open(filename, "w")  
+            return cls._instance
 
-# Use
-monSingleton1 = Singleton()
-monSingleton2 = Singleton()
+    def write(self, text):
+        """Write text to the file"""
+        self._file.write(text + "\n")
+        self._file.flush()  
 
-# monSingleton1 and monSingleton2 return the same instance
-assert monSingleton1 is monSingleton2
+    def close(self):
+        """Close the file"""
+        self._file.close()
+        Singleton._instance = None 
 
-print(monSingleton1, monSingleton2)
+
+
+writer1 = Singleton("output.txt")
+writer1.write("Hello World!")
+
+writer2 = Singleton("output.txt")
+writer2.write("This is the same file instance!")
+
+print(writer1 is writer2) 
+writer1.close()
