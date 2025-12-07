@@ -43,6 +43,5 @@ def main():
     facade = InfoFacade()
     facade.show_all_resources()
 
-
 if __name__ == "__main__":
     main()
